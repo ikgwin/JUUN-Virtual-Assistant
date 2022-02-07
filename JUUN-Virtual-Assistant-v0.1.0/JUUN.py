@@ -60,6 +60,7 @@ emails = {
     "georgia" : "georgialandon@icloud.com",
     "dad" : "justin@bridgebusinesscentre.com"
 }
+
 # creating lists of words/phrases that can be recognised as a command
 greeting_words = [
                     "hey",
@@ -220,7 +221,7 @@ def command():
 # The main function
 def JUUN():
     while True:
-
+        # ensuring all commands are in lower case to make conditionals easier to check and guarantee a result
         comnd = command().lower()
 
         if (comnd == 0):
@@ -241,18 +242,24 @@ def JUUN():
 
         # if the user wishes to open a website
         elif ("open" in comnd):
+            juun_say("opening " + comnd[5:])
             wb.get('opera').open_new_tab(comnd[5:].replace(" ","")+".com")
+            time.sleep(1)
             juun_say(comnd[5:]+" opened, anything else?")
             continue
 
         #if the user wishes to search the internet for something
         elif ("look up" in comnd):
             wb.get('opera').open_new_tab(f"https://www.google.com.tr/search?q={comnd[7:]}")
-            juun_say("searching the web for " + comnd[7:] + ", anything else?")
+            juun_say("searching the web for " + comnd[7:])
+            time.sleep(1)
+            print("anything else?")
             continue
         elif("search" in comnd):
             wb.get('opera').open_new_tab(f"https://www.google.com.tr/search?q={comnd[6:]}")
-            juun_say("searching the web for " + comnd[6:] + ", anything else?")
+            juun_say("searching the web for " + comnd[6:])
+            time.sleep(1)
+            print("anything else?")
             continue
 
         # if the user wishes to know the date
@@ -299,12 +306,13 @@ def JUUN():
             screenshot = pyautogui.screenshot()
             screenshot.save("C:\\Users\\isaak\\Desktop\\screenshot.png")
             juun_say("Screenshot taken")
-            time.sleep(0.5)
+            time.sleep(0.7)
             juun_say("anything else?")
 
         # if the user wishes to turn the computer to sleep
         elif ("go to sleep" in comnd):
             juun_say("sending computer to sleep")
+            time.sleep(1)
             juun_farewell()
             os.system(r'rundll32.exe powrprof.dll,SetSuspendState Sleep')
             sys.exit()
@@ -336,10 +344,11 @@ def JUUN():
         # if the user wishes to ask JUUN what she can do
         elif("what can you do" in comnd or "commands list" in comnd):
             juun_say("I can currently do the acions listed below:")
-            print("Tell you the time\nTell you the weather\nGoogle something\nOpen a website\nTake a screenshot of your screen\nPut the computer to sleep")
+            print("Tell you the time\nTell you the weather\nGoogle something\nOpen a website\nTake a screenshot of your screen\nPut the computer to sleep\nopen emails\nask common knowledge question or mathematical question")
             time.sleep(1)
             juun_say("do you need help with anything else?")
 
+        # if the user wishes to open emails (gmail)
         elif (comnd in email_words):
             juun_say("Opening emails for you")
             wb.get('opera').open_new_tab("gmail.com")
@@ -358,10 +367,18 @@ def JUUN():
             print(answer)
 
         
-        '''
-            else:
-            juun_say("i didnt understand that command, would you like to add it to your notes to create it?)
-        '''
+        elif (comnd not in farewell_words and "yes" not in comnd 
+                and comnd not in greeting_words and "open" not in comnd 
+                and "look up" not in comnd and comnd not in date_words 
+                and comnd not in time_words and comnd not in weather_words
+                and "go to sleep" not in comnd and comnd not in screenshot_words
+                and "who are you" not in comnd and "what is your name" not in comnd
+                and "what are you" not in comnd and "what's your name" not in comnd
+                and "do you have a name" not in comnd and "who is your creator" not in comnd
+                and "who created you" not in comnd and "what can you do" not in comnd
+                and "commands list" not in comnd and comnd not in email_words 
+                and "can you tell me" not in comnd):
+            juun_say("i didnt understand that command, would you like to add it to your notes to create it?")
 
     
 
