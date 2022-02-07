@@ -3,33 +3,46 @@ from http import client
 from re import L
 import urllib.request
 import speech_recognition as sr
+
 # importing pyttsx3 which basically onverts text to speech
 import pyttsx3
+
 # importing webbrowser which opens web broswers in another window in the users default browser
 import webbrowser as wb
+
 # importing urllib in order to open browsers when user asks to search something or open a website
 import urllib3
 opera_path = "C:\\Users\\isaak\\AppData\\Local\\Programs\\Opera GX\\launcher.exe"
 wb.register('opera', None, wb.BackgroundBrowser(opera_path))
+
 #importing datetime which allows us to manipulate dates and times, and get the users local date and time
 import datetime
+
 # importing wikipedia which effectively allows us to fetch information on wikipedia
 import wikipedia
+
 # importing sys in order to be able to exit the program
 import sys
+
 # importing random to make greetings and farewells etc. random
 import random
+
 # importing time to allow sleep
 import time
+
 #importing requests and json for the map data
 import requests, json
+
 # importing the pyautogui library to be able to take a screenshot of the desktop
 import pyautogui
+
 # importing os so the user can hibernate computer
 import os
+
 #importing ctypes in order to check if microphone is connected
 import ctypes
 from ctypes import *
+
 # importing wolfram alpha in order to answer mathematical calculations and other queries
 import wolframalpha
 
