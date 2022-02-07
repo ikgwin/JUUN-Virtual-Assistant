@@ -1,0 +1,115 @@
+# defining the fucntion that sends an email to someone
+def send_email():
+    emailBool = True
+
+    while (emailBool == True):
+        juun_say("Of course sir, is the person currently in your contacts?")
+        ans1 = command()
+        if (ans1 == "yes"):
+            juun_say("who would you like to send an email to?")
+            ans2 = command()
+            if (ans2 not in emails):
+                juun_say("This person isnt in your contacts list, shall I add them?")
+                ans3 = command()
+                if (ans3 == "yes"):
+                    juun_say("please enter their name and email below and I will add them.")
+                    new_name = input("ENTER CONTACTS NAME: ")
+                    new_email = input("ENTER CONTACTS EMAIL ADDRESS: ")
+                    emails.update({new_name : new_email})
+                    juun_say("Contact added. What would you like to send to " + new_name)
+                    ans4 = command()
+                    juun_say("you want me to say" + ans4 + ". shall i send it?")
+                    ans5 = command()
+                    if (ans5 == "yes"):
+                        # email send
+                        temp = 1
+                    elif (ans5 == "no"):
+                        juun_say("Okay, email not sent. Try again?"):
+                        ans6 = command()
+                        if (ans6 == "yes"): 
+                            send_email()
+                        elif (ans6 == "no"):
+                            juun_say("okay, cancelling email.")
+                            emailBool = False
+                            break
+                elif (ans3 == "no"):
+                    juun_say("Okay, contact not added.")
+                    juun_say("please enter their email below and I will send them an email")
+                    con_email = input("ENTER EMAIL ADDRESS: ")
+                    juun_say("What would you like to send to them?")
+                    emailAns1 = command()
+                    juun_say("you want me to say" + emailAns1 + ". shall i send it?")
+                    emailAns2 = command() 
+                    if (emailAns2 == "yes"):
+                        # send email
+                        okok = 1
+                    elif (emailAns2 == "no"):
+                        juun_say("Okay, email not sent. Try again?")
+                        emailAns3 = command()
+                        if (emailAns3 == "yes"):
+                            send_email()
+                        elif (emailAns3 == "no"):
+                            juun_say("okay, cancelling email.")
+                            emailBool = False
+                            break
+            elif (ans2 in emails):
+                juun_say("What would you like to send to " + ans2)
+                againEmailAns1 = command()
+                juun_say("you want me to say" + againEmailAns1 + ". shall i send it?")
+                againEmailAns2 = command()
+                if (againEmailAns2 == "yes"):
+                    # send email
+                    poop = 1
+                elif (againEmailAns2 == "no"):
+                    juun_say("Okay, email not sent. Try again?")
+                    againEmailAns3 = command()
+                    if (againEmailAns3 == "yes"):
+                        send_email()
+                    elif (againEmailAns3 == "no"):
+                        juun_say("okay, cancelling email.")
+                        emailBool = False
+                        break
+        elif (ans1 == "no"):
+            juun_say("Would you like me to add them to your contacts?")
+            poopAns1 = command()
+            if (poopAns1 == "yes"):
+                juun_say("please enter their name and email below and I will add them.")
+                new_name2 = input("ENTER CONTACTS NAME: ")
+                new_email2 = input("ENTER CONTACTS EMAIL ADDRESS: ")
+                emails.update({new_name2 : new_email2})
+                juun_say("Contact added. What would you like to send to " + new_name2)
+                poopAns2 = command()
+                juun_say("you want me to say" + poopAns2 + ". shall i send it?")
+                poopAns3 = command()
+                if (poopAns3 == "yes"):
+                    # send email
+                    okokok = 1
+                elif (poopAns3 == "no"):
+                    juun_say("Okay, email not sent. Try again?")
+                    poopAns4 = command()
+                    if (poopAns4 == "yes"):
+                        send_email()
+                    elif (poopAns4 == "no"):
+                        juun_say("okay, cancelling email.")
+                        emailBool = False
+                        break
+            elif (poopAns1 == "no"):
+                    juun_say("Okay, contact not added.")
+                    juun_say("please enter their email below and I will send them an email")
+                    con_email2 = input("ENTER EMAIL ADDRESS: ")
+                    juun_say("What would you like to send to them?")
+                    conAns1 = command()
+                    juun_say("you want me to say" + conAns1 + ". shall i send it?")
+                    conAns2 = command() 
+                    if (conAns2 == "yes"):
+                        # send email
+                        okokpo = 1
+                    elif (conAns2 == "no"):
+                        juun_say("Okay, email not sent. Try again?")
+                        conAns3 = command()
+                        if (conAns3 == "yes"):
+                            send_email()
+                        elif (conAns3 == "no"):
+                            juun_say("okay, cancelling email.")
+                            emailBool = False
+                            break
