@@ -342,7 +342,7 @@ def JUUN():
             juun_say("do you need help with anything?")
 
         # if the user wishes to ask JUUN what she can do
-        elif("what can you do" in comnd or "commands list" in comnd):
+        elif("what can you do" in comnd or "commands list" in comnd or "commands" in comnd):
             juun_say("I can currently do the acions listed below:")
             print("Tell you the time\nTell you the weather\nGoogle something\nOpen a website\nTake a screenshot of your screen\nPut the computer to sleep\nopen emails\nask common knowledge question or mathematical question")
             time.sleep(1)
@@ -437,6 +437,7 @@ if __name__=='__main__':
     print(" ")
     print("YOUR PERSONAL, VIRTUAL ASSISTANT.")
     print(" ")
+    print('SAY "Commands" FOR A LIST OF COMMANDS')
     print("#########################################################")
 
     juun_say("June Virtual Assistant Online")
