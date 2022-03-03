@@ -49,17 +49,12 @@ import wolframalpha
 # setting the objects for speech recognition feature
 juun_voice = pyttsx3.init()
 voices = juun_voice.getProperty('voices')
-juun_voice.setProperty('voice', voices[3].id) # setting the voice, 0 for male and 1 for female
+juun_voice.setProperty('voice', voices[2].id) # setting the voice, 0 for male and 1 for female
 juun_voice.setProperty('rate', 185) # setting the rate of the voice
 juun_voice.setProperty('volume', 0.7) # setting the voice's volume where min=0 and max=1
 juun_voice.runAndWait()
 
-#creating a dictionary of known contacts and their email addresses in order to send an email to them
-emails = {
-    "bailey" : "baileyjakobg@gmail.com",
-    "georgia" : "georgialandon@icloud.com",
-    "dad" : "justin@bridgebusinesscentre.com"
-}
+cwd = os.getcwd()
 
 # creating lists of words/phrases that can be recognised as a command
 greeting_words = [
@@ -92,6 +87,8 @@ farewell_words = [
                     "that's it thanks",
                     "that's it thank you",
                     "no that's it thank you",
+                    "exit",
+                    "exit program"
                 ]
 
 date_words = [
@@ -117,6 +114,10 @@ time_words = [
 
 weather_words = [
                     "what is the weather",
+                    "what's the weather like",
+                    "what is the weather like",
+                    "what's the weather like today",
+                    "what is the weather like today",
                     "what is the weather today",
                     "weather",
                     "what's the weather",
@@ -200,6 +201,24 @@ def juun_farewell():
         juun_say("Something went wrong, I have to bounce!")
         sys.exit()
 
+def juun_anything_else():
+    anything_else_list = [1,2,3,4,5] 
+    anything_else_selection = random.choice(anything_else_list)
+
+    if (anything_else_selection == 1):
+        juun_say("Do you need anything else?")   
+    elif (anything_else_selection == 2):
+        juun_say("Anything else sir?")
+    elif (anything_else_selection == 3):
+        juun_say("Do you need help with anything else?")
+    elif (anything_else_selection == 4):
+        juun_say("Anything else?")
+    elif (anything_else_selection == 5):
+        juun_say("Need anymore help?")
+    else:
+        juun_say("Something went wrong, I have to bounce!")
+        sys.exit()
+
 # defining the function that picks up the useers voice 
 def command():
     rec = sr.Recognizer()
@@ -234,6 +253,9 @@ def JUUN():
         # if the user replies yes to "anything else sir?"
         elif ("yes" in comnd):
             juun_say("how can i help?")
+
+        elif ("how are you" in comnd):
+            juun_say("As good as a computer can be.")
         
         # if the user says any of the greeting words such as hi, hello etc.
         elif (comnd in greeting_words):
@@ -245,23 +267,28 @@ def JUUN():
             juun_say("opening " + comnd[5:])
             wb.get('opera').open_new_tab(comnd[5:].replace(" ","")+".com")
             time.sleep(1)
-            juun_say(comnd[5:]+" opened, anything else?")
-            continue
+            juun_say(comnd[5:]+" opened")
+            juun_anything_else()
 
         #if the user wishes to search the internet for something
         elif ("look up" in comnd):
             wb.get('opera').open_new_tab(f"https://www.google.com.tr/search?q={comnd[7:]}")
             juun_say("searching the web for " + comnd[7:])
             time.sleep(1)
-            print("anything else?")
-            continue
+            juun_anything_else()
+        # has to be a different elif block or the slicing does not work
         elif("search" in comnd):
             wb.get('opera').open_new_tab(f"https://www.google.com.tr/search?q={comnd[6:]}")
             juun_say("searching the web for " + comnd[6:])
             time.sleep(1)
-            print("anything else?")
-            continue
-
+            juun_anything_else()
+        # has to be a different elif block or the slicing does not work
+        elif("google" in comnd):
+            wb.get('opera').open_new_tab(f"https://www.google.com.tr/search?q={comnd[6:]}")
+            juun_say("searching the web for " + comnd[7:])
+            time.sleep(1)
+            juun_anything_else()
+            
         # if the user wishes to know the date
         elif (comnd in date_words):
             today = datetime.date.today()
@@ -269,7 +296,7 @@ def JUUN():
 
             juun_say("the date is" + date)
             time.sleep(0.5)
-            juun_say("anything else?")
+            juun_anything_else()
 
         # if the user wishes to know the time
         elif (comnd in time_words):
@@ -277,7 +304,7 @@ def JUUN():
             current_time = now.strftime("%H:%M")
             juun_say("the time is " + current_time)
             time.sleep(0.5)
-            juun_say("anything else?")
+            juun_anything_else()
 
         # if the user wishes to know the weather
         elif (comnd in weather_words):
@@ -297,17 +324,16 @@ def JUUN():
                 print("The temperature in adelaide is " + str(temperature_result) + " degrees")
             else: 
                 juun_say("something went wrong")
-                break
 
-            juun_say("do you need anything else?")
+            juun_anything_else()
             
         # if the user wishes to take a screenshot of the screen
         elif (comnd in screenshot_words):
             screenshot = pyautogui.screenshot()
-            screenshot.save("C:\\Users\\isaak\\Desktop\\screenshot.png")
+            screenshot.save(f"{cwd}\\Screenshots\\screenshot.png")
             juun_say("Screenshot taken")
             time.sleep(0.7)
-            juun_say("anything else?")
+            juun_anything_else()
 
         # if the user wishes to turn the computer to sleep
         elif ("go to sleep" in comnd):
@@ -321,39 +347,38 @@ def JUUN():
         elif ("who are you" in comnd ):
             juun_say("I am june, your personal virtual assistant.")
             time.sleep(0.7)
-            juun_say("do you need help with anything?")
+            juun_anything_else()
         
         # if the user wishes to ask JUUN what her name is
         elif ("what is your name" in comnd or "what's your name" in comnd or "do you have a name" in comnd):
             juun_say("My name is June.")
             time.sleep(1)
-            juun_say("do you need help with anything?")
+            juun_anything_else()
 
         # if the user wishes to ask JUUN what she is
         elif ("what are you" in comnd):
             juun_say("I am a virtual asssistant, a program, made of one's and zeroes, to help you.")
             time.sleep(1)
-            juun_say("do you need help with anything?")
+            juun_anything_else()
 
         # if the use wishes to ask who created her
         elif ("who created you" in comnd or "who is your creator" in comnd):
             juun_say("I was created by Isaak Goodwin")
             time.sleep(1)
-            juun_say("do you need help with anything?")
+            juun_anything_else()
 
         # if the user wishes to ask JUUN what she can do
         elif("what can you do" in comnd or "commands list" in comnd or "commands" in comnd):
-            juun_say("I can currently do the acions listed below:")
-            print("Tell you the time\nTell you the weather\nGoogle something\nOpen a website\nTake a screenshot of your screen\nPut the computer to sleep\nopen emails\nask common knowledge question or mathematical question")
+            juun_say("Are you ready? I can: Tell you the time\nTell you the weather\nGoogle something\nOpen a website\nTake a screenshot of your screen\nPut the computer to sleep\nopen emails\nask common knowledge question or mathematical question")
             time.sleep(1)
-            juun_say("do you need help with anything else?")
+            juun_anything_else()
 
         # if the user wishes to open emails (gmail)
         elif (comnd in email_words):
             juun_say("Opening emails for you")
             wb.get('opera').open_new_tab("gmail.com")
             time.sleep(1)
-            juun_say("Do you need anything else?")
+            juun_anything_else()
 
         # if the user wishes to ask JUUN a mathematical or common question
         elif ("can you tell me" in comnd):
@@ -365,8 +390,18 @@ def JUUN():
             answer = next(res.results).text
             juun_say(answer)
             print(answer)
+            juun_anything_else()
 
-        
+        # adds a note to the JUUN_NOTES.txt file for the user
+        elif ("note this for me" in comnd or "note this" in comnd or "note something for me" in comnd):
+            juun_say("what would you like me to note?")
+            answer = command()
+            juun_say("Noted.")
+            file_object = open(f'{cwd}JUUN_NOTES.txt', 'a')
+            file_object.write(f"\n#idea: {answer}")
+            file_object.close()
+            juun_anything_else()
+
         elif (comnd not in farewell_words and "yes" not in comnd 
                 and comnd not in greeting_words and "open" not in comnd 
                 and "look up" not in comnd and comnd not in date_words 
@@ -377,11 +412,62 @@ def JUUN():
                 and "do you have a name" not in comnd and "who is your creator" not in comnd
                 and "who created you" not in comnd and "what can you do" not in comnd
                 and "commands list" not in comnd and comnd not in email_words 
-                and "can you tell me" not in comnd):
-            juun_say("i didnt understand that command, would you like to add it to your notes to create it?")
+                and "commands" not in comnd and "can you tell me" not in comnd and "note this for me" not in comnd
+                and "note this" not in comnd and "note something for me" not in comnd):
+            juun_say("I'm sorry, i dont understand.")
 
+            # used this as dev to create ideas if i said a command and it didn't work
+            '''reply = command()
+
+            if (reply == "yes" or command == "yes please"):
+                juun_say("Noted.")
+                file_object = open(f'{cwd}\JUUN_IDEAS.txt', 'a')
+                file_object.write(f"\n#idea: {comnd}")
+                file_object.close()
+                juun_anything_else()
+            elif (reply == "no" or reply == "no thankyou"):
+                juun_say("No worries.")
+                juun_anything_else()'''
+
+def program_run():
+    juun_say("June Virtual Assistant Online")
+    while True:
+        res = command()
+        if (res == "hey June"):
+            juun_say("How can I help?")
+            JUUN()
+        elif (res == "June turn off" or res == "turn off" or res == "exit"):
+            break
+        else:
+            continue
+
+from tkinter import *
+
+root= Tk()
+
+canvas = Canvas(root, width = 500, height = 300)
+canvas.pack()
+root.resizable(width=False, height=False)
+root.eval('tk::PlaceWindow . center')
+
+bg = PhotoImage(file = f"{cwd}\Media\Images\main_logo.png")
+
+label1 = Label( root, image = bg)
+label1.place(x = 0, y = -100)
     
+def close_app():
+    sys.exit()
 
+Button(root, text="RUN", bg='#0083EE', fg='white', activebackground='#124F88',activeforeground='white', padx=20, pady=3, command=program_run).place(x=170, y=260)
+Button(root, text="EXIT", bg='#0083EE', fg='white', activebackground='#124F88',activeforeground='white', padx=20, pady=3, command=close_app).place(x=250, y=260)
+
+
+photo = PhotoImage(file = f"{cwd}\Media\Images\JUUN_Icon.png")
+root.iconphoto(False, photo)
+
+
+
+# running primary code
 if __name__=='__main__':
     # startup
     print("#########################################################")
@@ -392,7 +478,7 @@ if __name__=='__main__':
     if (internet_connection()):
         print("Internet connection detected")
         print(" ")
-        time.sleep(1.5)
+        #time.sleep(1.5)
     else:
         time.sleep(3)
         print("No internet connection detected")
@@ -408,7 +494,7 @@ if __name__=='__main__':
     if (microphone_connection()):
          print("Microphone connection detected")
          print(" ")
-         time.sleep(1.5)
+         #time.sleep(1.5)
     else:
         time.sleep(3)
         print("No microphone connection detected")
@@ -440,11 +526,9 @@ if __name__=='__main__':
     print('SAY "Commands" FOR A LIST OF COMMANDS')
     print("#########################################################")
 
-    juun_say("June Virtual Assistant Online")
+    root.mainloop()
 
-    juun_say("how can i help?")
 
-    JUUN()
 
 
 
