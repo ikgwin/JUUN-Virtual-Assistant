@@ -15,5 +15,3 @@
  - open up emails
  - take a note from the user
  
- ^^ need to update this cbf yet
-
