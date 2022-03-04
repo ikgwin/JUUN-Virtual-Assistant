@@ -1,6 +1,8 @@
 # JUUN Virtual Assistant
  A project I am working on, a virtual assistant named JUUN who assists me in my everyday tasks when using my computer.
 
+Upon starting the application, click run to start JUUN. JUUN
+
  What can JUUN do? (Commands will be added here upon creation and successful functionality of command):
  - greet user
  - open a website
