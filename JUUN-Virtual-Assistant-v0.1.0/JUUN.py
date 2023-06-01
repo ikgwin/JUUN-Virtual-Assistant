@@ -55,6 +55,10 @@ juun_voice.setProperty('volume', 0.7) # setting the voice's volume where min=0 a
 juun_voice.runAndWait()
 
 cwd = os.getcwd()
+print(("LOOOOOOOOOOK:"))
+print(cwd)
+print("AND ")
+print(os.getcwd())
 
 # creating lists of words/phrases that can be recognised as a command
 greeting_words = [
@@ -72,6 +76,7 @@ greeting_words = [
 farewell_words = [
                     "bye",
                     "goodbye",
+                    "goodnight",
                     "i'm leaving june",
                     "no thanks",
                     "no",
@@ -141,7 +146,7 @@ screenshot_words = [
 email_words = [
                 "send an email",
                 "email",
-]
+              ]
 
 def internet_connection():
     try: 
@@ -165,59 +170,38 @@ def juun_say(audio):
 
 # defining the function that allows JUUN to greet
 def juun_greeting():
-    greeting_list = [1,2,3,4,5]
-    greeting_selection = random.choice(greeting_list)
+    greeting_list = [   "Hello sir, June is here to assist.", 
+                        "Hello Isaak.", 
+                        "Whats up g", 
+                        "About time you showed up sir", 
+                        "Hello Sir, I hope you're doing well."
+                    ]
 
-    if (greeting_selection == 1):
-        juun_say("Hello sir, June is here to assist.")   
-    elif (greeting_selection == 2):
-        juun_say("Hello Isaak.")
-    elif (greeting_selection == 3):
-        juun_say("Whats up g")
-    elif (greeting_selection == 4):
-        juun_say("About time you showed up sir")
-    elif (greeting_selection == 5):
-        juun_say("Hello Sir, I hope you're doing well.")
-    else:
-        juun_say("Something went wrong, I have to bounce!")
-        sys.exit()
+    greeting_selection = random.choice(greeting_list)
+    juun_say(greeting_selection)
 
 # defining the function that allows JUUN to say farewell
 def juun_farewell():
-    farewell_list = [1,2,3,4,5] 
-    farewell_selection = random.choice(farewell_list)
+    farewell_list = [   "Talk to you later sir.", 
+                        "Farewell Sir, i'll talk to you later.", 
+                        "Catch you on the flip side, Isaak", 
+                        "Peace out, talk soon", 
+                        "Speak to you soon sir."
+                    ] 
 
-    if (farewell_selection == 1):
-        juun_say("Talk to you later sir.")   
-    elif (farewell_selection == 2):
-        juun_say("Farewell Sir, i'll talk to you later.")
-    elif (farewell_selection == 3):
-        juun_say("Catch you on the flip side, Isaak")
-    elif (farewell_selection == 4):
-        juun_say("Peace out, talk soon")
-    elif (farewell_selection == 5):
-        juun_say("Speak to you soon sir.")
-    else:
-        juun_say("Something went wrong, I have to bounce!")
-        sys.exit()
+    farewell_selection = random.choice(farewell_list)
+    juun_say(farewell_selection)
 
 def juun_anything_else():
-    anything_else_list = [1,2,3,4,5] 
-    anything_else_selection = random.choice(anything_else_list)
+    anything_else_list = [  "Do you need anything else?", 
+                            "Anything else sir?", 
+                            "Do you need help with anything else?", 
+                            "Anything else?", 
+                            "Need anymore help?"
+                         ] 
 
-    if (anything_else_selection == 1):
-        juun_say("Do you need anything else?")   
-    elif (anything_else_selection == 2):
-        juun_say("Anything else sir?")
-    elif (anything_else_selection == 3):
-        juun_say("Do you need help with anything else?")
-    elif (anything_else_selection == 4):
-        juun_say("Anything else?")
-    elif (anything_else_selection == 5):
-        juun_say("Need anymore help?")
-    else:
-        juun_say("Something went wrong, I have to bounce!")
-        sys.exit()
+    anything_else_selection = random.choice(anything_else_list)
+    juun_say(anything_else_selection)
 
 # defining the function that picks up the useers voice 
 def command():
@@ -230,7 +214,7 @@ def command():
     try:
         print("...")
         phrase = rec.recognize_google(audio, language='en-au')
-        print(f"You said {phrase}")
+        print(f'You said "{phrase}"')
     except Exception as exep:
         print("Can you please repeat that")
         return "None"
@@ -277,18 +261,12 @@ def JUUN():
             time.sleep(1)
             juun_anything_else()
         # has to be a different elif block or the slicing does not work
-        elif("search" in comnd):
+        elif("search" in comnd or "google" in comnd):
             wb.get('opera').open_new_tab(f"https://www.google.com.tr/search?q={comnd[6:]}")
             juun_say("searching the web for " + comnd[6:])
             time.sleep(1)
             juun_anything_else()
-        # has to be a different elif block or the slicing does not work
-        elif("google" in comnd):
-            wb.get('opera').open_new_tab(f"https://www.google.com.tr/search?q={comnd[6:]}")
-            juun_say("searching the web for " + comnd[7:])
-            time.sleep(1)
-            juun_anything_else()
-            
+
         # if the user wishes to know the date
         elif (comnd in date_words):
             today = datetime.date.today()
@@ -402,72 +380,58 @@ def JUUN():
             file_object.close()
             juun_anything_else()
 
-        elif (comnd not in farewell_words and "yes" not in comnd 
-                and comnd not in greeting_words and "open" not in comnd 
-                and "look up" not in comnd and comnd not in date_words 
-                and comnd not in time_words and comnd not in weather_words
-                and "go to sleep" not in comnd and comnd not in screenshot_words
-                and "who are you" not in comnd and "what is your name" not in comnd
-                and "what are you" not in comnd and "what's your name" not in comnd
-                and "do you have a name" not in comnd and "who is your creator" not in comnd
-                and "who created you" not in comnd and "what can you do" not in comnd
-                and "commands list" not in comnd and comnd not in email_words 
-                and "commands" not in comnd and "can you tell me" not in comnd and "note this for me" not in comnd
-                and "note this" not in comnd and "note something for me" not in comnd):
-            juun_say("I'm sorry, i dont understand.")
+        else:
+            juun_say("I'm sorry, I don't understand.")
+            file_object = open(f'{cwd}JUUN_IDEAS.txt', 'a')
+            answer = command()
+            file_object.write(f"\n#idea: {answer}")
+            file_object.close()
+            time.sleep(2)
+            juun_anything_else()
 
-            # used this as dev to create ideas if i said a command and it didn't work
-            '''reply = command()
-
-            if (reply == "yes" or command == "yes please"):
-                juun_say("Noted.")
-                file_object = open(f'{cwd}\JUUN_IDEAS.txt', 'a')
-                file_object.write(f"\n#idea: {comnd}")
-                file_object.close()
-                juun_anything_else()
-            elif (reply == "no" or reply == "no thankyou"):
-                juun_say("No worries.")
-                juun_anything_else()'''
-
+# This function allows JUUN to be activated only when the user says hey june, can also turn JUUN off by the 3 exit commands
 def program_run():
-    juun_say("June Virtual Assistant Online")
+    juun_say("June Virtual Assistant Online. For activation say, Hey June.")
     while True:
         res = command()
         if (res == "hey June"):
             juun_say("How can I help?")
             JUUN()
         elif (res == "June turn off" or res == "turn off" or res == "exit"):
+            juun_say("Shutting down.")
             break
         else:
             continue
 
+# Defining a function that exits the application when the exit button is pressed 
+def close_app():
+    sys.exit()
+
+# Creating the UI with tkinter
 from tkinter import *
 
-root= Tk()
+root = Tk()
 
+# Creating a canvas
 canvas = Canvas(root, width = 500, height = 300)
 canvas.pack()
 root.resizable(width=False, height=False)
 root.eval('tk::PlaceWindow . center')
 
-bg = PhotoImage(file = f"{cwd}\Media\Images\main_logo.png")
-
+# Making the background ofthe canvas the JUUN logo
+bg = PhotoImage(file = fr"{cwd}\JUUN-Virtual-Assistant\JUUN-Virtual-Assistant-v0.1.0\Media\Images\main_logo.png")
 label1 = Label( root, image = bg)
 label1.place(x = 0, y = -100)
-    
-def close_app():
-    sys.exit()
 
+# Creating the two buttons RUN and EXIT
 Button(root, text="RUN", bg='#0083EE', fg='white', activebackground='#124F88',activeforeground='white', padx=20, pady=3, command=program_run).place(x=170, y=260)
 Button(root, text="EXIT", bg='#0083EE', fg='white', activebackground='#124F88',activeforeground='white', padx=20, pady=3, command=close_app).place(x=250, y=260)
 
-
-photo = PhotoImage(file = f"{cwd}\Media\Images\JUUN_Icon.png")
+# Making the small window icon of the application the JUUN logo
+photo = PhotoImage(file = f"{cwd}\JUUN-Virtual-Assistant\JUUN-Virtual-Assistant-v0.1.0\Media\Images\JUUN_Icon.png")
 root.iconphoto(False, photo)
 
-
-
-# running primary code
+# running code
 if __name__=='__main__':
     # startup
     print("#########################################################")
@@ -526,6 +490,7 @@ if __name__=='__main__':
     print('SAY "Commands" FOR A LIST OF COMMANDS')
     print("#########################################################")
 
+    # Running the tkinter root
     root.mainloop()
 
 
