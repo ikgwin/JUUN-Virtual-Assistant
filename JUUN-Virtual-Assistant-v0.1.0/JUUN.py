@@ -419,7 +419,8 @@ root.resizable(width=False, height=False)
 root.eval('tk::PlaceWindow . center')
 
 # Making the background ofthe canvas the JUUN logo
-bg = PhotoImage(file = fr"{cwd}\JUUN-Virtual-Assistant\JUUN-Virtual-Assistant-v0.1.0\Media\Images\main_logo.png")
+bg = PhotoImage(file = fr"{cwd}\Projects\JUUN-Virtual-Assistant\JUUN-Virtual-Assistant-v0.1.0\Media\Images\main_logo.png")
+
 label1 = Label( root, image = bg)
 label1.place(x = 0, y = -100)
 
