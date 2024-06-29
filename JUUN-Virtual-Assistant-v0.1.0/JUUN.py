@@ -286,7 +286,7 @@ def JUUN():
 
         # if the user wishes to know the weather
         elif (comnd in weather_words):
-            api_key = "f304675e38e3ddbaaa1ca327489eb9c8"
+            api_key = ""
             url = "http://api.openweathermap.org/data/2.5/weather?"
             city = "adelaide"
             full_url = url + "appid=" + api_key + "&q=" + city
